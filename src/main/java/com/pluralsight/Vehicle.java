@@ -95,6 +95,6 @@ public class Vehicle {
                 "| vehicleType: " + vehicleType +
                 "| color: " + color +
                 "| odometer: " + odometer +
-                "| price: $" + price;
+                "| price: $" + price + "\n";
     }
 }

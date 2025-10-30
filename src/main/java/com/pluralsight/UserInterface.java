@@ -12,6 +12,7 @@ public class UserInterface {
     public UserInterface() {
         this.scan = new Scanner(System.in);
     }
+
     private void displayMenu() {
         System.out.println("1 - Find vehicles by price");
         System.out.println("2 - Find vehicles by make/model");
@@ -25,12 +26,14 @@ public class UserInterface {
         System.out.println("99 - Quit");
         System.out.print("Enter your choice: ");
     }
+
     private void init() {
         DealershipFileManager manager = new DealershipFileManager();
         this.dealership = manager.getDealership();
         System.out.println("Loaded: " + dealership.getName());
     }
-    public void display(){
+
+    public void display() {
         init();
 
         boolean running = true;
@@ -79,11 +82,14 @@ public class UserInterface {
 
         scan.close();
     }
-    private void displayVehicles(ArrayList<Vehicle> vehicles){
+
+    private void displayVehicles(ArrayList<Vehicle> vehicles) {
         for (Vehicle vehicle : vehicles) {
             System.out.println(vehicle);
         }
+        System.out.println();
     }
+
     private void processAllVehiclesRequest() {
         ArrayList<Vehicle> vehicles = dealership.getAllVehicle();
         displayVehicles(vehicles);
@@ -100,6 +106,7 @@ public class UserInterface {
         ArrayList<Vehicle> vehicles = dealership.getVehicleByPrice(min, max);
         displayVehicles(vehicles);
     }
+
     private void processGetByMakeModelRequest() {
         System.out.print("Enter make: ");
         String make = scan.nextLine();
@@ -110,6 +117,7 @@ public class UserInterface {
         ArrayList<Vehicle> vehicles = dealership.getVehicleByMakeModel(make, model);
         displayVehicles(vehicles);
     }
+
     private void processGetByYearRequest() {
         System.out.print("Enter minimum year: ");
         int min = scan.nextInt();
@@ -121,6 +129,7 @@ public class UserInterface {
         ArrayList<Vehicle> vehicles = dealership.getVehicleByYear(min, max);
         displayVehicles(vehicles);
     }
+
     private void processGetByColorRequest() {
         System.out.print("Enter color: ");
         String color = scan.nextLine();
@@ -128,6 +137,7 @@ public class UserInterface {
         ArrayList<Vehicle> vehicles = dealership.getVehicleByColor(color);
         displayVehicles(vehicles);
     }
+
     private void processGetByMileageRequest() {
         System.out.print("Enter minimum mileage: ");
         int min = scan.nextInt();
@@ -139,6 +149,7 @@ public class UserInterface {
         ArrayList<Vehicle> vehicles = dealership.getVehicleByMileage(min, max);
         displayVehicles(vehicles);
     }
+
     private void processGetByVehicleTypeRequest() {
         System.out.print("Enter vehicle type (car/truck/SUV/van): ");
         String type = scan.nextLine();
@@ -147,6 +158,7 @@ public class UserInterface {
         displayVehicles(vehicles);
 
     }
+
     private void processAddVehicleRequest() {
         System.out.print("Enter VIN: ");
         int vin = scan.nextInt();
@@ -182,6 +194,7 @@ public class UserInterface {
 
         System.out.println(" Vehicle added successfully!");
     }
+
     private void processRemoveVehicleRequest() {
         System.out.print("Enter VIN of vehicle to remove: ");
         int vin = scan.nextInt();

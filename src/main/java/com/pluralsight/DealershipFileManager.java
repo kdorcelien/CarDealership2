@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class DealershipFileManager {
 
-    public Dealership getDealership(){
+    public Dealership getDealership() {
         Dealership dealership = null;
 
         try {
@@ -47,12 +47,27 @@ public class DealershipFileManager {
         return dealership;
     }
 
-    public static void saveDealership (Dealership record) {
+    public static void saveDealership(Dealership record) {
         try {
             BufferedWriter bufwriter = new BufferedWriter(
-                    new FileWriter("src/main/resources/inventory.csv", true));
-            ArrayList<Vehicle> vehicles = record.getAllVehicle();
-            bufwriter.write(record.toString());
+                    new FileWriter("src/main/resources/inventory.csv"));
+
+            bufwriter.write(record.getName() + "|" +
+                    record.getAddress() + "|" +
+                    record.getPhone());
+            bufwriter.newLine();
+
+            for (Vehicle vehicle : record.getAllVehicle()) {
+                bufwriter.write(vehicle.getVin() + "|" +
+                        vehicle.getYear() + "|" +
+                        vehicle.getMake() + "|" +
+                        vehicle.getModel() + "|" +
+                        vehicle.getVehicleType() + "|" +
+                        vehicle.getColor() + "|" +
+                        vehicle.getOdometer() + "|" +
+                        vehicle.getPrice());
+                bufwriter.newLine();
+            }
             bufwriter.close();
 
             System.out.println("Inventory saved!");
