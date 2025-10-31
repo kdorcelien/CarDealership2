@@ -14,9 +14,12 @@ public class LeaseContract extends Contract {
 
     @Override
     public double getTotalPrice() {
-        return 0;
+        return vehicleSold.getPrice() -
+                getExpectedEndingValue() +
+                getLeaseFee();
     }
 
+//All leases are financed at 4.0% for 36 months
     @Override
     public double getMonthlyPayment() {
         double annualRate = 0.04;
@@ -25,11 +28,12 @@ public class LeaseContract extends Contract {
         double monthlyRate = annualRate / 12;
         double numerator = monthlyRate * Math.pow(1 + monthlyRate, months);
         double denominator = Math.pow(1 + monthlyRate, months) - 1;
+
         return principal * (numerator / denominator);
     }
 
     public double getExpectedEndingValue() {
-        expectedEndingValue = vehicleSold.getPrice() / 0.5;
+        expectedEndingValue = vehicleSold.getPrice() * 0.5;
         return expectedEndingValue;
     }
 
@@ -38,7 +42,7 @@ public class LeaseContract extends Contract {
     }
 
     public double getLeaseFee() {
-        leaseFee = vehicleSold.getPrice() / 0.07;
+        leaseFee = vehicleSold.getPrice() + 0.07;
         return leaseFee;
     }
 
