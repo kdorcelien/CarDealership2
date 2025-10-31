@@ -22,7 +22,8 @@ public class ContractDataManager {
                     new FileWriter(FILE_NAME, false));
             if (contract instanceof SalesContract) {
                 SalesContract sc = (SalesContract) contract;
-                bufwriter.write(sc.getDateOfContract() + "|" +
+                bufwriter.write("      ==== SALE ===" + "\n" +
+                        sc.getDateOfContract() + "|" +
                         sc.getCustomerName() + "|" +
                         sc.getCustomerEmail() + "|" +
                         sc.getVehicleSold().getVin() + "|" +
@@ -39,7 +40,8 @@ public class ContractDataManager {
 
             } else if (contract instanceof LeaseContract) {
                 LeaseContract lc = (LeaseContract) contract;
-                bufwriter.write(lc.getDateOfContract() + "|" +
+                bufwriter.write("     ==== LEASE ===" + "\n" +
+                        lc.getDateOfContract() + "|" +
                         lc.getCustomerName() + "|" +
                         lc.getCustomerEmail() + "|" +
                         lc.getVehicleSold().getVin() + "|" +
