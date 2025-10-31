@@ -16,13 +16,13 @@ public class ContractDataManager {
     public static final String FILE_NAME = "src/main/resources/Contract.csv";
 
 
-    public static void saveDealership(Contract contract) {
+    public static void saveContract(Contract contract) {
         try {
             BufferedWriter bufwriter = new BufferedWriter(
-                    new FileWriter(FILE_NAME, false));
+                    new FileWriter(FILE_NAME, true));
             if (contract instanceof SalesContract) {
                 SalesContract sc = (SalesContract) contract;
-                bufwriter.write("      ==== SALE ===" + "\n" +
+                bufwriter.write("SALE" + "|" +
                         sc.getDateOfContract() + "|" +
                         sc.getCustomerName() + "|" +
                         sc.getCustomerEmail() + "|" +
@@ -40,7 +40,7 @@ public class ContractDataManager {
 
             } else if (contract instanceof LeaseContract) {
                 LeaseContract lc = (LeaseContract) contract;
-                bufwriter.write("     ==== LEASE ===" + "\n" +
+                bufwriter.write("LEASE" + "|" +
                         lc.getDateOfContract() + "|" +
                         lc.getCustomerName() + "|" +
                         lc.getCustomerEmail() + "|" +

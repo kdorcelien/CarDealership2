@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Dealership {
     private final String name;
@@ -19,6 +18,17 @@ public class Dealership {
     public ArrayList<Vehicle> getAllVehicle() {
         return this.inventory;
     }
+
+    public ArrayList<Vehicle> getVehicleByVin(int vin) {
+        ArrayList<Vehicle> results = new ArrayList<>();
+        for (Vehicle vehicle : this.inventory) {
+            if (vin == vehicle.getVin()) {
+                results.add(vehicle);
+            }
+        }
+        return results;
+    }
+
 
     public ArrayList<Vehicle> getVehicleByPrice(double min, double max) {
         ArrayList<Vehicle> results = new ArrayList<>();
@@ -39,6 +49,7 @@ public class Dealership {
         }
         return results;
     }
+
 
     public ArrayList<Vehicle> getVehicleByYear(int min, int max) {
         ArrayList<Vehicle> results = new ArrayList<>();

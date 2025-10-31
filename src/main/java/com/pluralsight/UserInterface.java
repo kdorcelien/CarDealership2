@@ -1,13 +1,22 @@
 package com.pluralsight;
 
+import com.pluralsight.LeaseAndSales.Contract;
+import com.pluralsight.LeaseAndSales.ContractDataManager;
+import com.pluralsight.LeaseAndSales.LeaseContract;
+import com.pluralsight.LeaseAndSales.SalesContract;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import static com.pluralsight.DealershipFileManager.saveDealership;
+import static com.pluralsight.LeaseAndSales.ContractDataManager.saveContract;
 
 public class UserInterface {
     public Dealership dealership;
+    public Contract contract;
     public Scanner scan;
+    private LocalDate localDate;
 
     public UserInterface() {
         this.scan = new Scanner(System.in);
@@ -23,6 +32,7 @@ public class UserInterface {
         System.out.println("7 - List ALL vehicles");
         System.out.println("8 - Add a vehicle");
         System.out.println("9 - Remove a vehicle");
+        System.out.println("10 - Lease or Buy a Vehicle");
         System.out.println("99 - Quit");
         System.out.print("Enter your choice: ");
     }
@@ -71,6 +81,8 @@ public class UserInterface {
                 case 9:
                     processRemoveVehicleRequest();
                     break;
+                case 10:
+                    processLeaseOrBuyRequest();
                 case 99:
                     running = false;
                     System.out.println("Goodbye!");
@@ -82,6 +94,78 @@ public class UserInterface {
 
         scan.close();
     }
+
+private void processLeaseOrBuyRequest() {
+    System.out.println("Enter 1 for Buy, or Enter 2 for Lease");
+    int choice = scan.nextInt();
+    scan.nextLine();
+    localDate = LocalDate.now();
+    ArrayList<Vehicle> vehicles = dealership.getAllVehicle();
+
+    System.out.println("Enter Vin:");
+    int vin = scan.nextInt();
+    scan.nextLine();
+
+    Vehicle selectedVehicle = null;
+    for (Vehicle v : vehicles) {
+        if (v.getVin() == vin) {
+            selectedVehicle = v;
+            break;
+        }
+    }
+
+    if (selectedVehicle == null) {
+        System.out.println(" Vehicle not found in inventory.");
+        return;
+    }
+    int currentYear = LocalDate.now().getYear();
+    if (choice == 2 && (currentYear - selectedVehicle.getYear() > 3)) {
+        System.out.println("Cannot lease a vehicle over 3 years old.");
+        return;
+    }
+
+    System.out.println("Enter your Name:");
+    String customerName = scan.nextLine();
+
+    System.out.println("Enter your Email:");
+    String customerEmail = scan.nextLine();
+
+    Contract contract = null;
+
+    if (choice == 1) {
+        System.out.println("Is this a finance option? (true/false)");
+        boolean financeOption = scan.nextBoolean();
+        scan.nextLine();
+
+        contract = new SalesContract(
+                localDate.toString(),
+                customerName,
+                customerEmail,
+                selectedVehicle,
+                financeOption
+        );
+
+    } else if (choice == 2) {
+        contract = new LeaseContract(
+                localDate.toString(),
+                customerName,
+                customerEmail,
+                selectedVehicle
+        );
+
+    } else {
+        System.out.println(" Please enter a valid number (1 or 2) ");
+        return;
+    }
+
+
+
+    ContractDataManager manager = new ContractDataManager();
+    saveContract(contract);
+
+    dealership.removeVehicle(selectedVehicle.getVin());
+
+}
 
     private void displayVehicles(ArrayList<Vehicle> vehicles) {
         for (Vehicle vehicle : vehicles) {
