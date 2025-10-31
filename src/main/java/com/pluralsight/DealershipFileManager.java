@@ -50,7 +50,7 @@ public class DealershipFileManager {
     public static void saveDealership(Dealership record) {
         try {
             BufferedWriter bufwriter = new BufferedWriter(
-                    new FileWriter("src/main/resources/inventory.csv"));
+                    new FileWriter("src/main/resources/inventory.csv",false));
 
             bufwriter.write(record.getName() + "|" +
                     record.getAddress() + "|" +
