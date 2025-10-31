@@ -1,6 +1,6 @@
 package com.pluralsight.LeaseAndSales;
 
-import com.pluralsight.Dealership;
+import com.pluralsight.Vehicle;
 
 import java.io.*;
 
@@ -56,7 +56,7 @@ public class ContractDataManager {
             }
 
             System.out.println(" Contract saved successfully.");
-
+            bufwriter.close();
         } catch (IOException e) {
             System.out.println(" Error saving contract: " + e.getMessage());
         }

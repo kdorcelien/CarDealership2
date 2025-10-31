@@ -163,7 +163,8 @@ private void processLeaseOrBuyRequest() {
     ContractDataManager manager = new ContractDataManager();
     saveContract(contract);
 
-    dealership.removeVehicle(selectedVehicle.getVin());
+    dealership.removeVehicle(contract.getVehicleSold().getVin());
+    saveDealership(dealership);
 
 }
 
